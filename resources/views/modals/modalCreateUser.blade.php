@@ -55,6 +55,35 @@
                         <textarea class="form-control" id="descripcionuser" rows="3"></textarea>
                       </div>
                   </div>
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="boletinuser">
+                      <label class="form-check-label" for="boletinuser">
+                        Deseo recibir boletin informativo
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="descripcionuser" class="form-label">Roles *</label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="rolesuser1">
+                      <label class="form-check-label" for="rolesuser1">
+                        Profesional de proyectos - Desarrollador
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="rolesuser2">
+                      <label class="form-check-label" for="rolesuser2">
+                        Gerente estrategico
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="rolesuser3">
+                      <label class="form-check-label" for="rolesuser3">
+                        Auxiliar administrativo
+                      </label>
+                    </div>
+                  </div>
                   <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                   <button type="submit" class="btn btn-primary" id ="btnrol"><span id ="btntext" class="bg-light" ></span>Agregar</button>
