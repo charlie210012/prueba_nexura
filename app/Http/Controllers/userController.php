@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\empleado;
 use App\Models\empleado_rol;
 use App\Models\rol;
+use App\Models\area;
 use Illuminate\Http\Request;
 
 
@@ -17,7 +18,13 @@ class userController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $areas = area::all();
+        $rols = rol::all();
+
+        return view('welcome',[
+            'areas' => $areas,
+            'rols'=> $rols,
+        ]);
     }
 
     

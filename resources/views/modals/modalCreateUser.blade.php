@@ -18,11 +18,11 @@
                             Los campos con (*) son obligatorios
                         </div>
                         <label class="control-label">Nombre Completo *</label>
-                        <input class="form-control" id="nameuser" name="nameuser" type="text" placeholder="Nombre completo del empleado">
+                        <input class="form-control" id="nameuser" name="nameuser" type="text" placeholder="Nombre completo del empleado" required>
                   </div>
                   <div class="form-group">
                     <label class="control-label">Correo Electronico *</label>
-                    <input class="form-control" id="emailuser" name="emailuser" type="text" placeholder="Correo electronico">
+                    <input class="form-control" id="emailuser" name="emailuser" type="text" placeholder="Correo electronico" required>
                   </div>
                   <div class="form-group">
                     <label class="control-label">Sexo *</label>
@@ -41,18 +41,17 @@
                   </div>
                   <div class="form-group">
                     <label class="control-label">Area *</label>
-                    <select class="form-control" id="areauser" name="areauser" placeholder="Escoje area">
-                        <option value="4">Administracion</option>
-                        <option value="1">Ventas</option>
-                        <option value="2">Calidad</option>
-                        <option value="3">Produccion</option>
-                    
+                    <select class="form-control" id="areauser" name="areauser" placeholder="Escoje area" required>
+                      <option value="0">Seleccione una area</option>
+                      @foreach ($areas as $area)
+                        <option value= "{{ $area->id }}"> {{ $area->nombre }}</option>
+                        @endforeach
                     </select>
                   </div>
                   <div class="form-group">
                     <div class="mb-3">
                         <label for="descripcionuser" class="form-label">Descripcion *</label>
-                        <textarea class="form-control" name="descripcionuser" id="descripcionuser" rows="3"></textarea>
+                        <textarea class="form-control" name="descripcionuser" id="descripcionuser" rows="3" required></textarea>
                       </div>
                   </div>
                   <div class="form-group">
@@ -65,24 +64,14 @@
                   </div>
                   <div class="form-group">
                     <label for="descripcionuser" class="form-label">Roles *</label>
+                    @foreach ($rols as $rol)
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="1" name ="Desarrollador" id="rolesuser1">
-                      <label class="form-check-label" for="rolesuser1">
-                        Profesional de proyectos - Desarrollador
+                      <input class="form-check-input" type="checkbox" value="{{ $rol->id }}" name ="rols[]" id="rolesuser.{{ $rol->id }}">
+                      <label class="form-check-label" for="rolesuser.{{ $rol->id }}">
+                        {{ $rol->nombre }}
                       </label>
                     </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="2" name ="Gerente" id="rolesuser2">
-                      <label class="form-check-label" for="rolesuser2">
-                        Gerente estrategico
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="3" name ="Auxiliar" id="rolesuser3">
-                      <label class="form-check-label" for="rolesuser3">
-                        Auxiliar administrativo
-                      </label>
-                    </div>
+                    @endforeach
                   </div>
                   <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>

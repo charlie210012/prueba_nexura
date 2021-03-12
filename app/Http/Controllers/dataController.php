@@ -74,7 +74,7 @@ class dataController extends Controller
      */
     public function store(Request $request)
     {
-        $databack= empleado::where([
+      $databack= empleado::where([
             'email'=> $request->emailuser
         ])->count();
         if($databack == 0){
@@ -97,48 +97,31 @@ class dataController extends Controller
 
             $empleado->save();
 
-        
-
-            if(($request->Auxiliar)=="3"){
-                $empleado_rol1 = new empleado_rol([
+            $rols = $request->rols;
+            foreach($rols as $rol){
+                $empleado_rol = new empleado_rol([
                     'empleado_id'=>$empleado->id,
-                    'rol_id'=>3,
+                    'rol_id'=>$rol,
                     'created_at' => now(),
                     'updated_at' => now()
-        
+                    ]);
+
+                $empleado_rol->save();
+
+                }
+
+                return response()->json([
+                    'message' => 'ok',
                 ]);
 
-                $empleado_rol1->save();
-            };
-            if(($request->Desarrollador)=="1"){
-                $empleado_rol2 = new empleado_rol([
-                    'empleado_id'=>$empleado->id,
-                    'rol_id'=>1,
-                    'created_at' => now(),
-                    'updated_at' => now()
-        
-                ]);
-                $empleado_rol2->save();
-            };
-            if(($request->Gerente)=="2"){
-                $empleado_rol3 = new empleado_rol([
-                    'empleado_id'=>$empleado->id,
-                    'rol_id'=>2,
-                    'created_at' => now(),
-                    'updated_at' => now()
-        
-                ]);
-                $empleado_rol3->save();
-            }
-
-            return response()->json([
-                'message' => 'ok'
-            ]);
+            
         }else{
             return response()->json([
                 'message' => 'error'
             ]);
+
         }
+        
     }
 
     /**
@@ -167,13 +150,14 @@ class dataController extends Controller
                 break;
             }
             $values = [
+                "id"=> $empleado->id,
 				"nombre" => $empleado->nombre,
 				"email" => $empleado->email,
 				"sexo" => $empleado->sexo,
-				"area" => $empleado->area->nombre,
+				"area" => $empleado->area_id,
 				"boletin" => $boletin,
                 'rols' =>$empleado->empleado_rol,
-                'descripcion' => $empleado->descricion
+                'descripcion' => $empleado->descripcion
 			];
 
             return $values;
@@ -200,7 +184,46 @@ class dataController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(($request->editboletinuser)=="1"){
+            $boletin = 1;
+        }else{
+            $boletin = 0;
+        };
+        
+        $empleado = empleado::find($id);
+        $empleado->nombre =$request->editnameuser;
+        $empleado->email= $request->editemailuser;
+        $empleado->sexo=$request->editsexo;
+        $empleado->area_id= $request->editareauser;
+        $empleado->boletin=$boletin;
+        $empleado->descripcion= $request->editdescripcionuser;
+        $empleado->updated_at = now();
+        $empleado ->save();
+
+        $rols = empleado_rol::all()->where('empleado_id',$id);
+
+        foreach($rols as $rol){
+            $rol->delete();
+        }
+
+        $editrols = $request->editrols;
+            foreach($editrols as $editrol){
+                $empleado_rol = new empleado_rol([
+                    'empleado_id'=>$empleado->id,
+                    'rol_id'=>$editrol,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                    ]);
+
+                $empleado_rol->save();
+
+                }
+
+
+
+        return response()->json([
+            'message' => 'ok',
+        ]);
     }
 
     /**

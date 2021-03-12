@@ -12,7 +12,8 @@
         
             <div class="tile">
               <div class="tile-body">
-                <form id ="usercreate" name ="usercreate"  method ="POST">
+                <form id ="editusercreate" name ="editusercreate"  method ="POST">
+                  <input class="form-control" id="id" name ="id" type="text" placeholder="id" readonly="">
                    <div class="form-group">
                         <div class="alert alert-primary" role="alert">
                             Los campos con (*) son obligatorios
@@ -41,12 +42,11 @@
                   </div>
                   <div class="form-group">
                     <label class="control-label">Area *</label>
-                    <select class="form-control" id="editareauser" name="editareauser" placeholder="Escoje area">
-                        <option value="4">Administracion</option>
-                        <option value="1">Ventas</option>
-                        <option value="2">Calidad</option>
-                        <option value="3">Produccion</option>
-                    
+                    <select class="form-control" id="editareauser" name="editareauser" placeholder="Escoje area" required>
+                      <option value="0">Seleccione una area</option>
+                      @foreach ($areas as $area)
+                        <option value= "{{ $area->id }}"> {{ $area->nombre }}</option>
+                        @endforeach
                     </select>
                   </div>
                   <div class="form-group">
@@ -65,24 +65,14 @@
                   </div>
                   <div class="form-group">
                     <label for="descripcionuser" class="form-label">Roles *</label>
+                    @foreach ($rols as $rol)
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="1" name ="editDesarrollador" id="editrolesuser1">
-                      <label class="form-check-label" for="rolesuser1">
-                        Profesional de proyectos - Desarrollador
+                      <input class="form-check-input" type="checkbox" value="{{ $rol->id }}" name ="editrols[]" id="rolesuser.{{ $rol->id }}">
+                      <label class="form-check-label" for="rolesuser.{{ $rol->id }}">
+                        {{ $rol->nombre }}
                       </label>
                     </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="2" name ="editGerente" id="editrolesuser2">
-                      <label class="form-check-label" for="rolesuser2">
-                        Gerente estrategico
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="3" name ="editAuxiliar" id="editrolesuser3">
-                      <label class="form-check-label" for="rolesuser3">
-                        Auxiliar administrativo
-                      </label>
-                    </div>
+                    @endforeach
                   </div>
                   <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>

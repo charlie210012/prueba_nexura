@@ -1,8 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('modals.modalCreateUser')
-    @include('modals.modalCreateUseredit')
+    @include('modals.modalCreateUser',[
+        'areas' => $areas,
+        'rols'=> $rols,
+    ])
+    @include('modals.modalCreateUseredit',[
+        'areas' => $areas,
+        'rols'=> $rols,
+    ])
     <div class="card-body">
         <div class="row">
             <div class="col-lg-12">
@@ -91,10 +97,13 @@ $(document).on("click","#btnempleado",function(){
                 text: 'Los datos fueron agregados con exito',
                 icon: 'success',
                  });
-                 $('#tableuser').DataTable().ajax.reload();
-                 $('#createuser').modal('hide');
-                 
-                 
+                    $('#tableuser').DataTable().ajax.reload();
+                    $('#createuser').modal('hide');
+                    $('#nameuser').val('');
+                    $('#emailuser').val('');
+                    $('#sexo').prop('checked',false);
+                    $('#areauser').val('Seleccione una area');
+                    $('#descripcionuser').val('');
                  
             }
             
@@ -159,19 +168,59 @@ $(document).on("click","#btnempleado",function(){
                 },
                 url:  "/empleados_data/" + id,
                 success: function(r){
+                    $('#id').val(r['id']);
                     $('#editnameuser').val(r['nombre']);
                     $('#editemailuser').val(r['email']);
                     $('#editsexo').val(r['sexo']);
                     $('#editareauser').val(r['area']);
-                    $('#ditdescripcionuser').val(r['descripcion']);
+                    $('#editdescripcionuser').val(r['descripcion']);
                     return false;
                     
                 }
                 
                 
             });
-        }
-    
+    }
+
+       $(document).on("click","#btnempleadoedit",function(){
+        var datos = $('#editusercreate').serialize();
+        var id = $('#id').val()
+        $.ajax({
+            type: "PUT",
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            url:  "/empleados_data/" + id,
+            data: datos,
+            success: function(r){
+                if(r['message']=="error"){
+                    Swal.fire({        
+                    title: '¡Atención!',
+                    text: 'No se pueden actualizar los datos del empleado', 
+                    icon: 'error',
+                    });
+                }else{
+                    Swal.fire({        
+                    title: '¡Felicidades!',
+                    text: 'Los datos fueron actualizados con exito',
+                    icon: 'success',
+                     });
+                        $('#tableuser').DataTable().ajax.reload();
+                        $('#createuseredit').modal('hide');
+                        $('#editnameuser').val('');
+                        $('#editemailuser').val('');
+                        $('#editsexo').prop('checked',false);
+                        $('#editareauser').val('Seleccione una area');
+                        $('#editdescripcionuser').val('');
+                     
+                }
+                
+                
+            }
+            
+        })
+        return false;
+    }); 
     </script>
 
 @endsection
