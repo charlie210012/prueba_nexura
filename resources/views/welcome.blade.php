@@ -2,14 +2,17 @@
 
 @section('content')
     @include('modals.modalCreateUser')
+    @include('modals.modalCreateUseredit')
     <div class="card-body">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card bg-gradient-dark text">
                     <div class="card-header bg-white text-dark">
                         <h3 class="mb-0">Lista de empleados</h3>
-                        <a onclick="createuser();" class="btn btn-sm btn-primary text-right"><i class="fas fa-user-plus"></i> Crear</a>
-                    </div>
+                            <div class="col text-right">
+                            <a onclick="createuser();" class="btn btn-sm btn-primary text-right"><i class="fas fa-user-plus"></i> Crear</a>
+                            </div>
+                        </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12">
@@ -145,5 +148,30 @@ $(document).on("click","#btnempleado",function(){
 		});
 	}
 </script>
+<script>
+    /*Este codigo lanza el modals de la edicion de los datos en la pagina Totaltrabajador.php, y sirve para mostras los datos a editar, enlazado a extraertrabajador.php para sacar esos datos*/
+    function modificar(id){
+        $('#createuseredit').modal('show');
+             $.ajax({
+                type: "GET",
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url:  "/empleados_data/" + id,
+                success: function(r){
+                    $('#editnameuser').val(r['nombre']);
+                    $('#editemailuser').val(r['email']);
+                    $('#editsexo').val(r['sexo']);
+                    $('#editareauser').val(r['area']);
+                    $('#ditdescripcionuser').val(r['descripcion']);
+                    return false;
+                    
+                }
+                
+                
+            });
+        }
+    
+    </script>
 
 @endsection

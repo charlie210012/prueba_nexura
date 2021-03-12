@@ -149,7 +149,35 @@ class dataController extends Controller
      */
     public function show($id)
     {
-        //
+        $empleado = empleado::find($id);
+        switch ($empleado->sexo) {
+            case "F":
+                $sexo = 'Femenino';
+                break;
+            case "M":
+                $sexo = 'Masculino';
+                break;
+        }
+        switch ($empleado->boletin) {
+            case "1":
+                $boletin = 'Si';
+                break;
+            case "0":
+                $boletin = 'No';
+                break;
+            }
+            $values = [
+				"nombre" => $empleado->nombre,
+				"email" => $empleado->email,
+				"sexo" => $empleado->sexo,
+				"area" => $empleado->area->nombre,
+				"boletin" => $boletin,
+                'rols' =>$empleado->empleado_rol,
+                'descripcion' => $empleado->descricion
+			];
+
+            return $values;
+        
     }
 
     /**
