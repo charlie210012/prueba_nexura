@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\empleado;
 use Illuminate\Http\Request;
 
 class userController extends Controller
@@ -14,6 +15,30 @@ class userController extends Controller
     public function index()
     {
         return view('welcome');
+    }
+
+    public function data()
+    {
+        $empleados = empleado::all();
+		$collection = [];
+
+        foreach ($empleados as $empleado) {
+
+			$values = [
+				"nombre" => $empleado->nombre,
+				"email" => $empleado->email,
+				"sexo" => $empleado->sexo,
+				"area" => $empleado->area->nombre,
+				"boletin" => $empleado->boletin,
+				"modificar" => 'hola',
+				"eliminar" => 'hola'
+			];
+			array_push($collection, $values);
+        }
+		return datatables($collection)
+                ->rawColumns(['modificar','eliminar'])
+                ->toJson();
+
     }
 
     /**

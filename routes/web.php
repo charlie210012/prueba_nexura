@@ -15,3 +15,5 @@ use App\Http\Controllers\userController;
 */
 
 Route::resource('/',userController::class);
+
+Route::get('/empleados_data',[userController::class, 'data']);

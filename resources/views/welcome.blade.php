@@ -5,7 +5,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-lg-12">
-                <div class="card bg-gradient-dark text-white">
+                <div class="card bg-gradient-dark text">
                     <div class="card-header bg-white text-dark">
                         <h3 class="mb-0">Lista de empleados</h3>
                         <a onclick="createuser();" class="btn btn-sm btn-primary text-right">Crear</a>
@@ -47,24 +47,23 @@
 	}
 </script>
 <script>
-    $(document).ready(function () {
-        var debugs = $('#tableuser').DataTable({
-            /*"serveSide": true,
-            "processing": true,
-            "responsive": true,
-            "searching": false,
-            "paging":   false,
-            "ordering": true,
-            "order":[[0,'desc']],
-            "ajax": "{{ url('dashboard_year_data') }}",
-            "columns": [
-                {"data": "year"},
-				{"data": "periods"},
-				{"data": "boton"}
-				
-            ],*/
-        });
+$(document).ready(function () {
+    var debugs = $('#tableuser').DataTable({
+        "serveSide": true,
+        "processing": true,
+        "responsive": true,
+        "ajax": "{{ url('empleados_data') }}",
+        "columns": [
+            {"data": "nombre"},
+            {"data": "email"},
+            {"data": "sexo"},
+            {"data": "area"},
+            {"data": "boletin"},
+            {"data": "modificar"},
+            {"data": "eliminar"}
+        ],
     });
+});
 </script>
 
 @endsection
