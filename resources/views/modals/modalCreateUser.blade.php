@@ -27,7 +27,7 @@
                   <div class="form-group">
                     <label class="control-label">Sexo *</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sexouser" id="sexouser1">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="sexouser1">
                         <label class="form-check-label" for="sexouser1">
                         Masculino
                         </label>
@@ -86,7 +86,7 @@
                   </div>
                   <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                  <button type="submit" class="btn btn-primary" id ="btnrol"><span id ="btntext" class="bg-light" ></span>Agregar</button>
+                  <button type="submit" class="btn btn-primary" id ="btnempleado"><span id ="btntext" class="bg-light" ></span>Agregar</button>
                   </div>
                 </form>
               </div>

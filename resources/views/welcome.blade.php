@@ -8,7 +8,7 @@
                 <div class="card bg-gradient-dark text">
                     <div class="card-header bg-white text-dark">
                         <h3 class="mb-0">Lista de empleados</h3>
-                        <a onclick="createuser();" class="btn btn-sm btn-primary text-right">Crear</a>
+                        <a onclick="createuser();" class="btn btn-sm btn-primary text-right"><i class="fas fa-user-plus"></i> Crear</a>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -18,10 +18,10 @@
                                         <thead class="thead-light">
                                             <tr>
                                                 <th scope="col"><i class="fa fa-user-tie"></i>  Nombre</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Sexo</th>
-                                                <th scope="col">Area</th>
-                                                <th scope="col">Boletin</th>
+                                                <th scope="col"><i class="fas fa-at"></i>  Email</th>
+                                                <th scope="col"><i class="fas fa-venus-mars"></i>  Sexo</th>
+                                                <th scope="col"><i class="fas fa-briefcase"></i>  Area</th>
+                                                <th scope="col"><i class="fas fa-envelope"></i>  Boletin</th>
                                                 <th scope="col">Modificar</th>
                                                 <th scope="col">Eliminar</th>
                                             </tr>

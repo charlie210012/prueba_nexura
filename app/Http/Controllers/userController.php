@@ -23,15 +23,33 @@ class userController extends Controller
 		$collection = [];
 
         foreach ($empleados as $empleado) {
+            switch ($empleado->sexo) {
+                case "F":
+                    $sexo = 'Femenino';
+                    break;
+                case "M":
+                    $sexo = 'Masculino';
+                    break;
+            }
+            switch ($empleado->boletin) {
+                case "1":
+                    $boletin = 'Si';
+                    break;
+                case "0":
+                    $boletin = 'No';
+                    break;
+            }
+
+
 
 			$values = [
 				"nombre" => $empleado->nombre,
 				"email" => $empleado->email,
-				"sexo" => $empleado->sexo,
+				"sexo" => $sexo,
 				"area" => $empleado->area->nombre,
-				"boletin" => $empleado->boletin,
-				"modificar" => 'hola',
-				"eliminar" => 'hola'
+				"boletin" => $boletin,
+				"modificar" => '<i onclick = "modificar();" class="far fa-edit" data-toggle="tooltip" title="Modificar" ></i>',
+				"eliminar" => '<i onclick = "eliminar();" class="fas fa-trash-alt" data-toggle="tooltip" title="Eliminar"></i>'
 			];
 			array_push($collection, $values);
         }
