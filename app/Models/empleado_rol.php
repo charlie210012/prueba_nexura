@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class empleado_rol extends Model
 {
     use HasFactory;
+    public function empleado()
+    {
+        return $this->belongsTo(empleado::class);
+    }
+    public function rol()
+    {
+        return $this->hasOne(rol::class,'id');
+    }
 }

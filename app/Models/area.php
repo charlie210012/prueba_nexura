@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class area extends Model
 {
     use HasFactory;
+    public function empleado()
+    {
+        return $this->hasMany(empleado::class,'id');
+    }
 }
