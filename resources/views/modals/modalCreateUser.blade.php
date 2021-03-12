@@ -27,13 +27,13 @@
                   <div class="form-group">
                     <label class="control-label">Sexo *</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="sexouser1">
+                        <input class="form-check-input" type="radio" name="sexo" value="M" id="sexouser1">
                         <label class="form-check-label" for="sexouser1">
                         Masculino
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="sexouser2">
+                        <input class="form-check-input" type="radio" name="sexo" value="F" id="sexouser2">
                         <label class="form-check-label" for="sexouser2">
                         Femenino
                         </label>
@@ -42,22 +42,22 @@
                   <div class="form-group">
                     <label class="control-label">Area *</label>
                     <select class="form-control" id="areauser" name="areauser" placeholder="Escoje area">
-                        <option>Administracion</option>
-                        <option>Ventas</option>
-                        <option>Calidad</option>
-                        <option>Produccion</option>
+                        <option value="4">Administracion</option>
+                        <option value="1">Ventas</option>
+                        <option value="2">Calidad</option>
+                        <option value="3">Produccion</option>
                     
                     </select>
                   </div>
                   <div class="form-group">
                     <div class="mb-3">
                         <label for="descripcionuser" class="form-label">Descripcion *</label>
-                        <textarea class="form-control" id="descripcionuser" rows="3"></textarea>
+                        <textarea class="form-control" name="descripcionuser" id="descripcionuser" rows="3"></textarea>
                       </div>
                   </div>
                   <div class="form-group">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="boletinuser">
+                      <input class="form-check-input" type="checkbox" value=1 name="boletinuser" id="boletinuser">
                       <label class="form-check-label" for="boletinuser">
                         Deseo recibir boletin informativo
                       </label>
@@ -66,19 +66,19 @@
                   <div class="form-group">
                     <label for="descripcionuser" class="form-label">Roles *</label>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="rolesuser1">
+                      <input class="form-check-input" type="checkbox" value="1" name ="Desarrollador" id="rolesuser1">
                       <label class="form-check-label" for="rolesuser1">
                         Profesional de proyectos - Desarrollador
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="rolesuser2">
+                      <input class="form-check-input" type="checkbox" value="2" name ="Gerente" id="rolesuser2">
                       <label class="form-check-label" for="rolesuser2">
                         Gerente estrategico
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="rolesuser3">
+                      <input class="form-check-input" type="checkbox" value="3" name ="Auxiliar" id="rolesuser3">
                       <label class="form-check-label" for="rolesuser3">
                         Auxiliar administrativo
                       </label>

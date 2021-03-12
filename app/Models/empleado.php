@@ -16,4 +16,5 @@ class empleado extends Model
     {
         return $this->hasMany(empleado_rol::class);
     }
+    protected $guarded = [];
 }

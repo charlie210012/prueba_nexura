@@ -12,4 +12,5 @@ class area extends Model
     {
         return $this->hasMany(empleado::class,'id');
     }
+    protected $guarded = [];
 }

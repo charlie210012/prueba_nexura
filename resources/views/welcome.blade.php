@@ -65,5 +65,85 @@ $(document).ready(function () {
     });
 });
 </script>
+<script>
+$(document).on("click","#btnempleado",function(){
+    var datos = $('#usercreate').serialize();
+    $.ajax({
+        type: "POST",
+        headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        url:  "{{ url('empleados_data') }}",
+        data: datos,
+        success: function(r){
+            if(r['message']=="error"){
+                Swal.fire({        
+                title: '¡Atención!',
+                text: 'El empleado ya existe', 
+                icon: 'error',
+                });
+            }else{
+                Swal.fire({        
+                title: '¡Felicidades!',
+                text: 'Los datos fueron agregados con exito',
+                icon: 'success',
+                 });
+                 $('#tableuser').DataTable().ajax.reload();
+                 $('#createuser').modal('hide');
+                 
+                 
+                 
+            }
+            
+            
+        }
+        
+    })
+    return false
+}); 
+</script>
+<script>
+    function eliminar(id){
+		Swal.fire({
+		title: 'Esta seguro?',
+		text: "¿Desea borrar este empleado?",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Si,borrar!',
+		cancelButtonText: 'No, cancelar!',
+		}).then((result) => {
+			if (result["value"] == true){
+				$.ajax({
+					type: "DELETE",
+					headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				    },
+					url:  "/empleados_data/" + id,
+                    data: id,
+					success: function(r){
+						if (r['message']=="ok"){
+								Swal.fire({
+									title: 'Felicidades!',
+									text:'Se ha borrado al empleado con exito',
+									icon: 'success',
+									confirmButtonText: 'OK!',
+								}).then((res)=> {
+									if (res["value"] == true){
+										$('#tableuser').DataTable().ajax.reload();
+									}
+								})
+							}
+					}
+				})
+			}else{
+					Swal.fire({
+					title: 'Procesado!',
+					text:'No se ha borrado esta empleado',
+					icon: 'warning',
+					});
+				}
+		});
+	}
+</script>
 
 @endsection

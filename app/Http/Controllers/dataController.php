@@ -1,0 +1,197 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\empleado;
+use App\Models\empleado_rol;
+use App\Models\rol;
+
+
+class dataController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $empleados = empleado::all();
+		$collection = [];
+
+        foreach ($empleados as $empleado) {
+            switch ($empleado->sexo) {
+                case "F":
+                    $sexo = 'Femenino';
+                    break;
+                case "M":
+                    $sexo = 'Masculino';
+                    break;
+            }
+            switch ($empleado->boletin) {
+                case "1":
+                    $boletin = 'Si';
+                    break;
+                case "0":
+                    $boletin = 'No';
+                    break;
+            }
+
+
+
+			$values = [
+				"nombre" => $empleado->nombre,
+				"email" => $empleado->email,
+				"sexo" => $sexo,
+				"area" => $empleado->area->nombre,
+				"boletin" => $boletin,
+				"modificar" => '<i onclick = "modificar('.$empleado->id.');" class="far fa-edit" data-toggle="tooltip" title="Modificar" ></i>',
+				"eliminar" => '<i onclick = "eliminar('.$empleado->id.');" class="fas fa-trash-alt" data-toggle="tooltip" title="Eliminar"></i>'
+			];
+			array_push($collection, $values);
+        }
+		return datatables($collection)
+                ->rawColumns(['modificar','eliminar'])
+                ->toJson();
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $databack= empleado::where([
+            'email'=> $request->emailuser
+        ])->count();
+        if($databack == 0){
+            if(($request->boletinuser)=="1"){
+                $boletin = 1;
+            }else{
+                $boletin = 0;
+            };
+
+            $empleado = new empleado([
+                'nombre'=> $request->nameuser,
+                'email'=> $request->emailuser,
+                'sexo'=> $request->sexo,
+                'area_id'=> $request->areauser,
+                'boletin'=>$boletin,
+                'descripcion'=> $request->descripcionuser,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+
+            $empleado->save();
+
+        
+
+            if(($request->Auxiliar)=="3"){
+                $empleado_rol1 = new empleado_rol([
+                    'empleado_id'=>$empleado->id,
+                    'rol_id'=>3,
+                    'created_at' => now(),
+                    'updated_at' => now()
+        
+                ]);
+
+                $empleado_rol1->save();
+            };
+            if(($request->Desarrollador)=="1"){
+                $empleado_rol2 = new empleado_rol([
+                    'empleado_id'=>$empleado->id,
+                    'rol_id'=>1,
+                    'created_at' => now(),
+                    'updated_at' => now()
+        
+                ]);
+                $empleado_rol2->save();
+            };
+            if(($request->Gerente)=="2"){
+                $empleado_rol3 = new empleado_rol([
+                    'empleado_id'=>$empleado->id,
+                    'rol_id'=>2,
+                    'created_at' => now(),
+                    'updated_at' => now()
+        
+                ]);
+                $empleado_rol3->save();
+            }
+
+            return response()->json([
+                'message' => 'ok'
+            ]);
+        }else{
+            return response()->json([
+                'message' => 'error'
+            ]);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $empleado = empleado::find($id);
+        $empleado->delete();
+
+        $rols = empleado_rol::all()->where('empleado_id',$id);
+        foreach($rols as $rol){
+            $rol->delete();
+        }
+        return response()->json([
+            'message' => 'ok',
+        ]);
+    }
+}

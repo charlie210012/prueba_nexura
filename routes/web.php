@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userController;
+use App\Http\Controllers\dataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,6 @@ use App\Http\Controllers\userController;
 
 Route::resource('/',userController::class);
 
-Route::get('/empleados_data',[userController::class, 'data']);
+Route::resource('/empleados_data',dataController::class);
+
+
