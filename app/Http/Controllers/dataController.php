@@ -210,46 +210,58 @@ class dataController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if($request->editnameuser=="" or
+        $request->editemailuser=="" or
+        $request->editsexo=="" or
+        $request->editdescripcionuser==""){
 
-        if(($request->editboletinuser)=="1"){
-            $boletin = 1;
+            return response()->json([
+                'message' => 'error',
+            ]);
+
         }else{
-            $boletin = 0;
-        };
-        
-        $empleado = empleado::find($id);
-        $empleado->nombre =$request->editnameuser;
-        $empleado->email= $request->editemailuser;
-        $empleado->sexo=$request->editsexo;
-        $empleado->area_id= $request->editareauser;
-        $empleado->boletin=$boletin;
-        $empleado->descripcion= $request->editdescripcionuser;
-        $empleado->updated_at = now();
-        $empleado ->save();
-
-        $rols = empleado_rol::all()->where('empleado_id',$id);
-
-        foreach($rols as $rol){
-            $rol->delete();
+            
+            if(($request->editboletinuser)=="1"){
+                $boletin = 1;
+            }else{
+                $boletin = 0;
+            };
+            
+            $empleado = empleado::find($id);
+            $empleado->nombre =$request->editnameuser;
+            $empleado->email= $request->editemailuser;
+            $empleado->sexo=$request->editsexo;
+            $empleado->area_id= $request->editareauser;
+            $empleado->boletin=$boletin;
+            $empleado->descripcion= $request->editdescripcionuser;
+            $empleado->updated_at = now();
+            $empleado ->save();
+    
+            $rols = empleado_rol::all()->where('empleado_id',$id);
+    
+            foreach($rols as $rol){
+                $rol->delete();
+            }
+    
+            $editrols = $request->editrols;
+                foreach($editrols as $editrol){
+                    $empleado_rol = new empleado_rol([
+                        'empleado_id'=>$empleado->id,
+                        'rol_id'=>$editrol,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                        ]);
+    
+                    $empleado_rol->save();
+    
+                    }
+    
+            return response()->json([
+                'message' => 'ok',
+            ]);
         }
 
-        $editrols = $request->editrols;
-            foreach($editrols as $editrol){
-                $empleado_rol = new empleado_rol([
-                    'empleado_id'=>$empleado->id,
-                    'rol_id'=>$editrol,
-                    'created_at' => now(),
-                    'updated_at' => now()
-                    ]);
-
-                $empleado_rol->save();
-
-                }
-
-        return response()->json([
-            'message' => 'ok',
-        ]);
-
+        
     }
 
     /**
