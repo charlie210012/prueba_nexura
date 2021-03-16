@@ -74,53 +74,73 @@ class dataController extends Controller
      */
     public function store(Request $request)
     {
-      $databack= empleado::where([
-            'email'=> $request->emailuser
-        ])->count();
-        if($databack == 0){
-            if(($request->boletinuser)=="1"){
-                $boletin = 1;
-            }else{
-                $boletin = 0;
-            };
+        
+        if($request->nameuser!==null &
+        $request->emailuser!==null &
+        $request->sexo!==null &
+        $request->areauser!=="Seleccione una area" &
+        $request->descripcionuser!==null){
 
-            $empleado = new empleado([
-                'nombre'=> $request->nameuser,
-                'email'=> $request->emailuser,
-                'sexo'=> $request->sexo,
-                'area_id'=> $request->areauser,
-                'boletin'=>$boletin,
-                'descripcion'=> $request->descripcionuser,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
+            $name_rols = rol::all();
 
-            $empleado->save();
+            $databack= empleado::where([
+                    'email'=> $request->emailuser
+                ])->count();
+            if($databack == 0){
+                if(($request->boletinuser)=="1"){
+                    $boletin = 1;
+                }else{
+                    $boletin = 0;
+                };
 
-            $rols = $request->rols;
-            foreach($rols as $rol){
-                $empleado_rol = new empleado_rol([
-                    'empleado_id'=>$empleado->id,
-                    'rol_id'=>$rol,
+                $empleado = new empleado([
+                    'nombre'=> $request->nameuser,
+                    'email'=> $request->emailuser,
+                    'sexo'=> $request->sexo,
+                    'area_id'=> $request->areauser,
+                    'boletin'=>$boletin,
+                    'descripcion'=> $request->descripcionuser,
                     'created_at' => now(),
                     'updated_at' => now()
-                    ]);
-
-                $empleado_rol->save();
-
-                }
-
-                return response()->json([
-                    'message' => 'ok',
                 ]);
 
-            
+                $empleado->save();
+
+                $rols = $request->rols;
+                foreach($rols as $rol){
+                    $empleado_rol = new empleado_rol([
+                        'empleado_id'=>$empleado->id,
+                        'rol_id'=>$rol,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                        ]);
+
+                    $empleado_rol->save();
+
+                    }
+
+                    return response()->json([
+                        'message' => 'ok',
+                        'name_rols'=>$name_rols,
+                        'empleado'=>$empleado
+                    ]);
+
+                
+            }else{
+                return response()->json([
+                    'message' => 'error',
+                    'alerta'=>'El trabajador ya existe'
+                ]);
+
+            }
+
         }else{
             return response()->json([
-                'message' => 'error'
+                'message' => 'error',
+                'alerta'=>'Todos los datos son obligatorios'
             ]);
-
         }
+        
         
     }
 
@@ -132,7 +152,11 @@ class dataController extends Controller
      */
     public function show($id)
     {
+        $empleado_rols = empleado_rol::where("empleado_id",$id)->get();
+        $name_rols = rol::all();
+
         $empleado = empleado::find($id);
+
         switch ($empleado->sexo) {
             case "F":
                 $sexo = 'Femenino';
@@ -157,7 +181,9 @@ class dataController extends Controller
 				"area" => $empleado->area_id,
 				"boletin" => $boletin,
                 'rols' =>$empleado->empleado_rol,
-                'descripcion' => $empleado->descripcion
+                'descripcion' => $empleado->descripcion,
+                'roles'=>$empleado_rols,
+                'name_rols'=>$name_rols
 			];
 
             return $values;
@@ -184,6 +210,7 @@ class dataController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         if(($request->editboletinuser)=="1"){
             $boletin = 1;
         }else{
@@ -219,11 +246,10 @@ class dataController extends Controller
 
                 }
 
-
-
         return response()->json([
             'message' => 'ok',
         ]);
+
     }
 
     /**

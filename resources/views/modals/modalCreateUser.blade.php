@@ -22,18 +22,18 @@
                   </div>
                   <div class="form-group">
                     <label class="control-label">Correo Electronico *</label>
-                    <input class="form-control" id="emailuser" name="emailuser" type="text" placeholder="Correo electronico" required>
+                    <input class="form-control" id="emailuser" name="emailuser" type="email" placeholder="Correo electronico" required>
                   </div>
                   <div class="form-group">
                     <label class="control-label">Sexo *</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sexo" value="M" id="sexouser1">
+                        <input class="form-check-input" id ="MA" type="radio" name="sexo" value="M" id="sexouser1">
                         <label class="form-check-label" for="sexouser1">
                         Masculino
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sexo" value="F" id="sexouser2">
+                        <input class="form-check-input" id="FA" type="radio" name="sexo" value="F" id="sexouser2">
                         <label class="form-check-label" for="sexouser2">
                         Femenino
                         </label>
@@ -66,7 +66,7 @@
                     <label for="descripcionuser" class="form-label">Roles *</label>
                     @foreach ($rols as $rol)
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="{{ $rol->id }}" name ="rols[]" id="rolesuser.{{ $rol->id }}">
+                      <input class="form-check-input" type="checkbox" value="{{ $rol->id }}" name ="rols[]" id="rolesuser{{ $rol->id }}">
                       <label class="form-check-label" for="rolesuser.{{ $rol->id }}">
                         {{ $rol->nombre }}
                       </label>

@@ -5,7 +5,7 @@
         'areas' => $areas,
         'rols'=> $rols,
     ])
-    @include('modals.modalCreateUseredit',[
+    @include('modals.modalCreateUserEdit',[
         'areas' => $areas,
         'rols'=> $rols,
     ])
@@ -88,7 +88,7 @@ $(document).on("click","#btnempleado",function(){
             if(r['message']=="error"){
                 Swal.fire({        
                 title: '¡Atención!',
-                text: 'El empleado ya existe', 
+                text: r['alerta'], 
                 icon: 'error',
                 });
             }else{
@@ -97,6 +97,13 @@ $(document).on("click","#btnempleado",function(){
                 text: 'Los datos fueron agregados con exito',
                 icon: 'success',
                  });
+                     var name_rols = r['name_rols'];
+                     name_rols.forEach(element => {
+                        $('#rolesuser'+element["id"]).prop('checked',false);
+                     });
+                    $('#MA').prop('checked',false);
+                    $('#FA').prop('checked',false);
+                    $('#boletinuser').prop('checked',false);
                     $('#tableuser').DataTable().ajax.reload();
                     $('#createuser').modal('hide');
                     $('#nameuser').val('');
@@ -168,13 +175,29 @@ $(document).on("click","#btnempleado",function(){
                 },
                 url:  "/empleados_data/" + id,
                 success: function(r){
+                    var name_rols = r["name_rols"];
+                    name_rols.forEach(element => {
+                        $('#'+element["id"]).prop('checked',false);
+                    });
                     $('#id').val(r['id']);
                     $('#editnameuser').val(r['nombre']);
                     $('#editemailuser').val(r['email']);
-                    $('#editsexo').val(r['sexo']);
+                    if(r['sexo']=="M"){
+                        $('#M').prop('checked',true);
+                    }else{
+                        $('#F').prop('checked',true);
+                    }
                     $('#editareauser').val(r['area']);
                     $('#editdescripcionuser').val(r['descripcion']);
-                    return false;
+                    var empleado_rols = r["roles"];
+                    empleado_rols.forEach(element =>{
+                        $('#'+element["rol_id"]).prop('checked',true);
+                    });
+                    if(r["boletin"]=="Si"){
+                        $('#editboletinuser').prop('checked',true);
+                    }else{
+                        $('#editboletinuser').prop('checked',false);
+                    }
                     
                 }
                 
@@ -196,7 +219,7 @@ $(document).on("click","#btnempleado",function(){
                 if(r['message']=="error"){
                     Swal.fire({        
                     title: '¡Atención!',
-                    text: 'No se pueden actualizar los datos del empleado', 
+                    text: 'Todos los campos son obligatorios', 
                     icon: 'error',
                     });
                 }else{

@@ -13,7 +13,6 @@
             <div class="tile">
               <div class="tile-body">
                 <form id ="editusercreate" name ="editusercreate"  method ="POST">
-                  <input class="form-control" id="id" name ="id" type="text" placeholder="id" readonly="">
                    <div class="form-group">
                         <div class="alert alert-primary" role="alert">
                             Los campos con (*) son obligatorios
@@ -23,18 +22,18 @@
                   </div>
                   <div class="form-group">
                     <label class="control-label">Correo Electronico *</label>
-                    <input class="form-control" id="editemailuser" name="editemailuser" type="text" placeholder="Correo electronico">
+                    <input class="form-control" id="editemailuser" name="editemailuser" type="email" placeholder="Correo electronico">
                   </div>
                   <div class="form-group">
                     <label class="control-label">Sexo *</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="editsexo" value="M" id="editsexouser1">
+                        <input class="form-check-input" id="M" type="radio" name="editsexo" value="M" id="editsexouser1">
                         <label class="form-check-label" for="sexouser1">
                         Masculino
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="editsexo" value="F" id="editsexouser2">
+                        <input class="form-check-input" id="F" type="radio" name="editsexo" value="F" id="editsexouser2">
                         <label class="form-check-label" for="sexouser2">
                         Femenino
                         </label>
@@ -67,12 +66,13 @@
                     <label for="descripcionuser" class="form-label">Roles *</label>
                     @foreach ($rols as $rol)
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="{{ $rol->id }}" name ="editrols[]" id="rolesuser.{{ $rol->id }}">
+                      <input class="form-check-input" type="checkbox" value={{ $rol->id }} name ="editrols[]" id={{ $rol->id }}>
                       <label class="form-check-label" for="rolesuser.{{ $rol->id }}">
                         {{ $rol->nombre }}
                       </label>
                     </div>
                     @endforeach
+                    <input id="id" name ="id" type="text" placeholder="id" readonly=""  style="visibility:hidden">
                   </div>
                   <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
