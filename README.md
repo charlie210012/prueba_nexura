@@ -18,7 +18,7 @@ Archivo **.env**
 **usa php artisan serve si estas usando xampp** 
 
 
-**De antemano agradezco que me permitieran participar tuve algunos problemas de conexion y energia por lo que decidi quedarme hasta tarde para entregar igual el requerimiento**
+**link de requerimiento desplegado: (http://dev1.carlosandresarevalo.tech/)**
 
 #### Desarrollador
 
